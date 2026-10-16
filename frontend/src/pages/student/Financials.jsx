@@ -24,7 +24,7 @@ export default function Financials() {
       .catch(() => {});
   }, [loadFinancials]);
 
-  // While a QR is live, ask the server every 2 seconds whether it was scanned / completed.
+  // While a QR is live, ask the server every 2 seconds whether the payment was completed.
   const token = session?.token;
   const status = session?.status;
   useEffect(() => {
@@ -61,7 +61,9 @@ export default function Financials() {
   const pct = data.totalFee > 0 ? Math.min(100, (data.paidFee / data.totalFee) * 100) : 0;
   const cleared = Number(data.remainingBalance) <= 0;
   const live = session && LIVE.includes(session.status);
-  const payUrl = session ? `${window.location.origin}/pay/${session.token}` : "";
+  // The QR opens our payer page, which sends the phone to eSewa. Open this site on your LAN address
+  // (not "localhost") so the phone can reach it.
+  const payUrl = session ? `${window.location.origin}/pay/esewa/${session.token}` : "";
 
   return (
     <>
@@ -104,35 +106,22 @@ export default function Financials() {
               <>
                 <p><strong>Amount to pay: {money(session.amount)}</strong></p>
                 <p className="muted small">
-                  Valid until {new Date(session.expiresAt).toLocaleTimeString()}.{" "}
+                  Scan the code with your phone camera, then log in to eSewa to pay. Valid until{" "}
+                  {new Date(session.expiresAt).toLocaleTimeString()}.{" "}
                   <button className="link-btn" onClick={generate} disabled={busy}>Generate a new QR</button>
-                </p>
-                <p className="muted small">
-                  Demo: scanning is simulated. Open{" "}
-                  <a href={payUrl} target="_blank" rel="noreferrer">this payment link</a>{" "}
-                  in another tab to act as the payer's phone.
                 </p>
               </>
             )}
           </div>
 
-          {live && (
+          {live && payUrl && (
             <div className="qr-box">
               <div className="qr-wrap">
-                <div className={session.status === "SCANNED" ? "qr-code dim" : "qr-code"}>
+                <div className="qr-code">
                   <QRCodeSVG value={payUrl} size={170} />
                 </div>
-                {session.status === "SCANNED" && (
-                  <div className="qr-overlay" role="status">
-                    <span className="spinner" aria-hidden="true" />
-                    <strong>QR scanned</strong>
-                    <span>Waiting for the payment to complete…</span>
-                  </div>
-                )}
               </div>
-              <span className="small muted" role="status">
-                {session.status === "SCANNED" ? "Scanned. Waiting for completion…" : "Waiting for scan…"}
-              </span>
+              <span className="small muted" role="status">Waiting for payment…</span>
             </div>
           )}
         </section>

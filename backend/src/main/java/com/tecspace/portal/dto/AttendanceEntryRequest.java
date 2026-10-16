@@ -1,0 +1,5 @@
+package com.tecspace.portal.dto;
+
+import jakarta.validation.constraints.NotBlank;
+
+public record AttendanceEntryRequest(@NotBlank String studentId, @NotBlank String status) {}

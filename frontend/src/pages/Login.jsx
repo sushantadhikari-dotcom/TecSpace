@@ -18,7 +18,7 @@ export default function Login() {
     setBusy(true);
     try {
       const u = await login(email, password);
-      navigate(u.role === "ROLE_ADMIN" ? "/admin" : "/student/financials");
+      navigate(u.role === "ROLE_ADMIN" ? "/admin" : "/student/dashboard");
     } catch (err) {
       setError(errMsg(err));
     } finally {
@@ -31,20 +31,40 @@ export default function Login() {
       <div className="auth-intro">
         <Logo size={34} />
         <h1>Your fees, grades and library card in one place.</h1>
-        <p>Sign in with your university email to see where you stand this trimester.</p>
+        <p>
+          Sign in with your university email to see where you stand this
+          trimester.
+        </p>
       </div>
       <form className="auth-form" onSubmit={submit}>
         <h2>Log in</h2>
-        {error && <div className="alert error" role="alert">{error}</div>}
+        {error && (
+          <div className="alert error" role="alert">
+            {error}
+          </div>
+        )}
         <label>
           University email
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoFocus
+          />
         </label>
         <label>
           Password
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </label>
-        <button className="btn primary" disabled={busy}>{busy ? "Logging in…" : "Log in"}</button>
+        <button className="btn primary" disabled={busy}>
+          {busy ? "Logging in…" : "Log in"}
+        </button>
         <p className="muted">
           New student? <Link to="/signup">Create your account</Link>
         </p>

@@ -27,6 +27,10 @@ public class PaymentSession {
     @Id
     private String id;
 
+    @Indexed
+    private String pidx;
+    private String paymentUrl;
+
     @Indexed(unique = true)
     private String token;
 

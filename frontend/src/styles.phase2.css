@@ -1,0 +1,17 @@
+
+/* ---------- Phase 2 additions: append to the end of styles.css ---------- */
+.pill.warn { background: #fff4e0; color: #8a5a00; border-color: #f2d49b; }
+.badge-count { display: inline-block; min-width: 1.25rem; padding: 0 0.4rem; margin-left: 0.35rem; border-radius: 999px; background: var(--danger); color: #fff; font-size: 0.75rem; font-weight: 600; text-align: center; line-height: 1.25rem; }
+
+.note { padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+.note p { margin: 0.3rem 0; white-space: pre-wrap; }
+.note .panel-head { margin-bottom: 0; }
+.note.unread { background: #f3faf9; border-left: 4px solid var(--amber); }
+
+.bar .low { background: var(--danger); }
+
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tabs button { font: inherit; font-weight: 600; padding: 0.5rem 1rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); cursor: pointer; }
+.tabs button.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+label.check { flex-direction: row; align-items: center; gap: 0.5rem; }
+label.check input { width: 1.1rem; height: 1.1rem; }

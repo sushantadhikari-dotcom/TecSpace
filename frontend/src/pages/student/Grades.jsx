@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api, { errMsg } from "../../api.js";
 
 export default function Grades() {
@@ -16,13 +17,18 @@ export default function Grades() {
       <h1 className="page-title">Grades</h1>
 
       <section className="panel cgpa">
-        <span className="muted">Cumulative GPA</span>
-        <div className="big">{data.cgpa.toFixed(2)}</div>
+        <div className="panel-head">
+          <div>
+            <span className="muted">Cumulative GPA (live)</span>
+            <div className="big">{data.cgpa.toFixed(2)}</div>
+          </div>
+          <Link to="/student/transcript">View official transcript</Link>
+        </div>
       </section>
 
       {data.trimesters.length === 0 && (
         <section className="panel">
-          <p className="muted">No grades have been published yet. They will appear here once your faculty uploads them.</p>
+          <p className="muted">No grades have been entered yet. They will appear here as soon as your faculty uploads them.</p>
         </section>
       )}
 
@@ -33,13 +39,14 @@ export default function Grades() {
             <span className="pill">GPA {t.gpa.toFixed(2)}</span>
           </div>
           <table>
-            <thead><tr><th>Code</th><th>Course</th><th className="num">Credits</th><th className="num">Grade</th></tr></thead>
+            <thead><tr><th>Code</th><th>Course</th><th className="num">Credits</th><th className="num">Marks</th><th className="num">Grade</th></tr></thead>
             <tbody>
               {t.courses.map((c) => (
                 <tr key={c.courseCode}>
                   <td className="mono">{c.courseCode}</td>
                   <td>{c.courseName}</td>
                   <td className="num">{c.creditHours}</td>
+                  <td className="num">{c.percentage != null ? `${c.percentage}%` : "—"}</td>
                   <td className="num"><strong>{c.grade}</strong></td>
                 </tr>
               ))}

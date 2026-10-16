@@ -10,8 +10,10 @@ public class Course {
     private String courseCode;
     @NotBlank
     private String courseName;
-    @NotBlank
+    /** Letter grade. May be left empty if a percentage is given: the letter is then worked out from the grading scale. */
     private String grade;
+    /** Optional marks out of 100. */
+    private Double percentage;
     @Min(1)
     private int creditHours;
 }

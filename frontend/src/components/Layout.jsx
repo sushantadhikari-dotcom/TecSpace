@@ -10,7 +10,9 @@ const studentLinks = [
   { to: "/student/timetable", label: "Timetable & exams" },
   { to: "/student/attendance", label: "Attendance" },
   { to: "/student/financials", label: "Fees & payments" },
+  { to: "/student/invoices", label: "Invoices & ledger" },
   { to: "/student/grades", label: "Grades" },
+  { to: "/student/transcript", label: "Transcript" },
   { to: "/student/library", label: "Library card" },
 ];
 const adminLinks = [
@@ -19,6 +21,8 @@ const adminLinks = [
   { to: "/admin/timetable", label: "Timetable" },
   { to: "/admin/exams", label: "Exams" },
   { to: "/admin/attendance", label: "Attendance" },
+  { to: "/admin/finance", label: "Finance" },
+  { to: "/admin/results", label: "Results & grading" },
   { to: "/admin/messages", label: "Send message" },
   { to: "/admin/announcements", label: "Announcements" },
 ];

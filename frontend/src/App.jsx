@@ -11,7 +11,10 @@ import Courses from "./pages/student/Courses.jsx";
 import Timetable from "./pages/student/Timetable.jsx";
 import Attendance from "./pages/student/Attendance.jsx";
 import Financials from "./pages/student/Financials.jsx";
+import Invoices from "./pages/student/Invoices.jsx";
+import Receipt from "./pages/student/Receipt.jsx";
 import Grades from "./pages/student/Grades.jsx";
+import Transcript from "./pages/student/Transcript.jsx";
 import Library from "./pages/student/Library.jsx";
 import Students from "./pages/admin/Students.jsx";
 import StudentDetail from "./pages/admin/StudentDetail.jsx";
@@ -21,6 +24,8 @@ import AdminAnnouncements from "./pages/admin/Announcements.jsx";
 import AdminExams from "./pages/admin/Exams.jsx";
 import AdminAttendance from "./pages/admin/Attendance.jsx";
 import AdminMessages from "./pages/admin/Messages.jsx";
+import AdminFinance from "./pages/admin/Finance.jsx";
+import AdminResults from "./pages/admin/Results.jsx";
 
 function Protected({ role, children }) {
   const { user } = useAuth();
@@ -46,14 +51,17 @@ export default function App() {
       <Route path="/pay/return" element={<PayReturn />} />
 
       {/* Inbox: any logged-in user */}
-      <Route path="/notifications" element={<Protected>{<Notifications />}</Protected>} />
+      <Route path="/notifications" element={<Protected><Notifications /></Protected>} />
 
       <Route path="/student/dashboard" element={S(<Dashboard />)} />
       <Route path="/student/courses" element={S(<Courses />)} />
       <Route path="/student/timetable" element={S(<Timetable />)} />
       <Route path="/student/attendance" element={S(<Attendance />)} />
       <Route path="/student/financials" element={S(<Financials />)} />
+      <Route path="/student/invoices" element={S(<Invoices />)} />
+      <Route path="/student/receipt/:id" element={S(<Receipt />)} />
       <Route path="/student/grades" element={S(<Grades />)} />
+      <Route path="/student/transcript" element={S(<Transcript />)} />
       <Route path="/student/library" element={S(<Library />)} />
 
       <Route path="/admin" element={A(<Students />)} />
@@ -62,6 +70,8 @@ export default function App() {
       <Route path="/admin/timetable" element={A(<AdminTimetable />)} />
       <Route path="/admin/exams" element={A(<AdminExams />)} />
       <Route path="/admin/attendance" element={A(<AdminAttendance />)} />
+      <Route path="/admin/finance" element={A(<AdminFinance />)} />
+      <Route path="/admin/results" element={A(<AdminResults />)} />
       <Route path="/admin/messages" element={A(<AdminMessages />)} />
       <Route path="/admin/announcements" element={A(<AdminAnnouncements />)} />
 

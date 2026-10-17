@@ -1,5 +1,6 @@
 package com.tecspace.portal.dto;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
-public record AssignmentView(String teacherId, String teacherName, String email, List<String> courseCodes) {}
+public record AssignmentView(String id, String courseCode, String courseName, String title, String description,
+                             LocalDateTime dueAt, double maxMarks, int submissionCount, int gradedCount, int studentCount) {}

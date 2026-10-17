@@ -7,6 +7,7 @@ import Logo from "./Logo.jsx";
 const studentLinks = [
   { to: "/student/dashboard", label: "Dashboard" },
   { to: "/student/courses", label: "Course registration" },
+  { to: "/student/assignments", label: "Assignments" },
   { to: "/student/timetable", label: "Timetable & exams" },
   { to: "/student/attendance", label: "Attendance" },
   { to: "/student/financials", label: "Fees & payments" },
@@ -14,11 +15,14 @@ const studentLinks = [
   { to: "/student/grades", label: "Grades" },
   { to: "/student/transcript", label: "Transcript" },
   { to: "/student/requests", label: "Requests & messages" },
+  { to: "/student/profile", label: "My profile" },
   { to: "/student/library", label: "Library card" },
 ];
 
 const teacherLinks = [
   { to: "/teacher/courses", label: "My courses" },
+  { to: "/teacher/assignments", label: "Assignments" },
+  { to: "/teacher/gradebook", label: "Gradebook" },
   { to: "/teacher/attendance", label: "Attendance" },
   { to: "/teacher/messages", label: "Message students" },
 ];

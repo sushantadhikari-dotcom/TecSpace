@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 import api, { errMsg, money } from "../../api.js";
 import { useAuth } from "../../AuthContext.jsx";
 
+const when = (d) => new Date(d).toLocaleString(undefined, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+
 export default function Dashboard() {
   const { user } = useAuth();
   const [d, setD] = useState(null);
+  const [deadlines, setDeadlines] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     api.get("/student/dashboard").then((r) => setD(r.data)).catch((e) => setError(errMsg(e)));
+    api.get("/student/assignments")
+      .then((r) => setDeadlines(r.data.filter((a) => a.status === "NOT_SUBMITTED" && !a.overdue).slice(0, 5)))
+      .catch(() => {});
   }, []);
 
   if (!d) return <p className="muted">{error || "Loading your dashboard…"}</p>;
@@ -32,12 +38,33 @@ export default function Dashboard() {
           <strong>{d.enrolledCount}</strong>
           <span className="small">{d.enrolledCredits} credit hours</span>
         </Link>
+        <Link to="/student/assignments" className="stat">
+          <span className="muted">Assignments to hand in</span>
+          <strong className={deadlines.length ? "warn" : ""}>{deadlines.length}</strong>
+          <span className="small">{deadlines.length ? "See deadlines" : "Nothing due"}</span>
+        </Link>
         <Link to="/student/timetable" className="stat">
           <span className="muted">Classes today</span>
           <strong>{d.todayClasses.length}</strong>
           <span className="small">See full timetable</span>
         </Link>
       </div>
+
+      {deadlines.length > 0 && (
+        <section className="panel">
+          <h2>Upcoming deadlines</h2>
+          <table>
+            <tbody>
+              {deadlines.map((a) => (
+                <tr key={a.id}>
+                  <td><strong>{a.courseCode}</strong> · {a.title}</td>
+                  <td className="num">{when(a.dueAt)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
 
       <section className="panel">
         <h2>Today's classes</h2>

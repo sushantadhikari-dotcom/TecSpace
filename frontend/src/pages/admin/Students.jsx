@@ -37,7 +37,10 @@ export default function Students() {
                   <td>{s.universityEmail}</td>
                   <td>{s.faculty}</td>
                   <td>{s.session}</td>
-                  <td className="num"><Link to={`/admin/students/${s.id}`}>Manage</Link></td>
+                  <td className="num">
+                    <Link to={`/admin/records/${s.id}`}>Record</Link>{" · "}
+                    <Link to={`/admin/students/${s.id}`}>Fees &amp; grades</Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -11,6 +11,7 @@ import Notifications from "./pages/Notifications.jsx";
 import Account from "./pages/Account.jsx";
 import Dashboard from "./pages/student/Dashboard.jsx";
 import Courses from "./pages/student/Courses.jsx";
+import Assignments from "./pages/student/Assignments.jsx";
 import Timetable from "./pages/student/Timetable.jsx";
 import Attendance from "./pages/student/Attendance.jsx";
 import Financials from "./pages/student/Financials.jsx";
@@ -20,12 +21,16 @@ import Grades from "./pages/student/Grades.jsx";
 import Transcript from "./pages/student/Transcript.jsx";
 import Requests from "./pages/student/Requests.jsx";
 import Certificate from "./pages/student/Certificate.jsx";
+import Profile from "./pages/student/Profile.jsx";
 import Library from "./pages/student/Library.jsx";
 import TeacherCourses from "./pages/teacher/Courses.jsx";
+import TeacherAssignments from "./pages/teacher/Assignments.jsx";
+import TeacherGradebook from "./pages/teacher/Gradebook.jsx";
 import TeacherAttendance from "./pages/teacher/Attendance.jsx";
 import TeacherMessages from "./pages/teacher/Messages.jsx";
 import Students from "./pages/admin/Students.jsx";
 import StudentDetail from "./pages/admin/StudentDetail.jsx";
+import StudentRecord from "./pages/admin/StudentRecord.jsx";
 import AdminCourses from "./pages/admin/Courses.jsx";
 import AdminTimetable from "./pages/admin/Timetable.jsx";
 import AdminAnnouncements from "./pages/admin/Announcements.jsx";
@@ -79,6 +84,7 @@ export default function App() {
 
       <Route path="/student/dashboard" element={S(<Dashboard />)} />
       <Route path="/student/courses" element={S(<Courses />)} />
+      <Route path="/student/assignments" element={S(<Assignments />)} />
       <Route path="/student/timetable" element={S(<Timetable />)} />
       <Route path="/student/attendance" element={S(<Attendance />)} />
       <Route path="/student/financials" element={S(<Financials />)} />
@@ -88,14 +94,18 @@ export default function App() {
       <Route path="/student/transcript" element={S(<Transcript />)} />
       <Route path="/student/requests" element={S(<Requests />)} />
       <Route path="/student/certificate/:id" element={S(<Certificate />)} />
+      <Route path="/student/profile" element={S(<Profile />)} />
       <Route path="/student/library" element={S(<Library />)} />
 
       <Route path="/teacher/courses" element={T(<TeacherCourses />)} />
+      <Route path="/teacher/assignments" element={T(<TeacherAssignments />)} />
+      <Route path="/teacher/gradebook" element={T(<TeacherGradebook />)} />
       <Route path="/teacher/attendance" element={T(<TeacherAttendance />)} />
       <Route path="/teacher/messages" element={T(<TeacherMessages />)} />
 
       <Route path="/admin" element={A(<Students />)} />
       <Route path="/admin/students/:id" element={A(<StudentDetail />)} />
+      <Route path="/admin/records/:id" element={A(<StudentRecord />)} />
       <Route path="/admin/admissions" element={A(<AdminAdmissions />)} />
       <Route path="/admin/courses" element={A(<AdminCourses />)} />
       <Route path="/admin/timetable" element={A(<AdminTimetable />)} />

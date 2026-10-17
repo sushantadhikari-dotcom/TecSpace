@@ -1,0 +1,18 @@
+
+/* ---------- Phase 4 additions: append to the end of styles.css ---------- */
+.temp-pass { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 1.6rem; letter-spacing: 0.08em; padding: 0.6rem 1rem; margin: 0.6rem 0; background: #fff; border: 2px dashed var(--teal); border-radius: 8px; display: inline-block; color: var(--ink); user-select: all; }
+
+.perm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.5rem 1rem; margin: 0.5rem 0; }
+
+.app-card .inline-form { margin: 0.75rem 0 0; }
+
+.pay-page { min-height: 100%; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; padding: 2rem 1rem; }
+.pay-card { width: 100%; max-width: 480px; }
+
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+.charts .panel { margin: 0; }
+.hbar { display: grid; grid-template-columns: 90px 1fr 90px; gap: 0.6rem; align-items: center; margin: 0.45rem 0; font-size: 0.9rem; }
+.hbar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar-track { height: 12px; background: var(--chalk); border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.hbar-fill { height: 100%; background: var(--teal); border-radius: 999px; }
+.hbar-value { text-align: right; font-variant-numeric: tabular-nums; }

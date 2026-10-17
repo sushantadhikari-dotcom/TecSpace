@@ -1,5 +1,7 @@
 package com.tecspace.portal.security;
 
+import com.tecspace.portal.repository.AuditLogRepository;
+import com.tecspace.portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,16 +27,24 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final UserRepository userRepository;
+    private final AuditLogRepository auditLogRepository;
 
     @Value("${tecspace.cors.allowed-origins}")
     private String allowedOrigins;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, UserRepository userRepository,
+                          AuditLogRepository auditLogRepository) {
         this.jwtAuthFilter = jwtAuthFilter;
+        this.userRepository = userRepository;
+        this.auditLogRepository = auditLogRepository;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        PermissionFilter permissionFilter = new PermissionFilter(userRepository);
+        AuditFilter auditFilter = new AuditFilter(auditLogRepository);
+
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -43,8 +53,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/pay/**").permitAll()
+                .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/api/student/**").hasRole("STUDENT")
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/teacher/**").hasRole("TEACHER")
+                .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "STAFF")
                 .anyRequest().authenticated())
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((req, res, e) -> {
@@ -57,7 +69,9 @@ public class SecurityConfig {
                     res.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     res.getWriter().write("{\"message\":\"You do not have access to this resource\"}");
                 }))
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(permissionFilter, JwtAuthFilter.class)
+            .addFilterAfter(auditFilter, PermissionFilter.class);
         return http.build();
     }
 

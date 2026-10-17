@@ -68,6 +68,10 @@ export default function Login() {
         <p className="muted">
           New student? <Link to="/signup">Create your account</Link>
         </p>
+        <p className="muted">
+          <Link to="/apply">Apply for admission</Link> ·{" "}
+          <Link to="/track">Track your application</Link>
+        </p>
       </form>
     </div>
   );

@@ -930,3 +930,83 @@ label.check input {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- Phase 5 additions: append to the end of styles.css ---------- */
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: 0.75rem;
+}
+@media (max-width: 860px) {
+  .contact-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+details summary {
+  cursor: pointer;
+  color: var(--teal);
+}
+/* ---------- Layout fixes: append to the very end of styles.css ---------- */
+
+/* Sidebar: logo and user box stay in place, only the menu scrolls.
+   Without this, a long menu spills out of the white sidebar (as in your screenshot). */
+.sidebar {
+  overflow: hidden;
+  gap: 1.25rem;
+}
+.sidebar nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.sidebar nav a {
+  flex-shrink: 0;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+}
+.who {
+  flex-shrink: 0;
+}
+
+/* On phones the sidebar becomes a top bar again, so nothing should scroll inside it */
+@media (max-width: 860px) {
+  .sidebar {
+    overflow: visible;
+  }
+  .sidebar nav {
+    flex: none;
+    overflow: visible;
+  }
+}
+
+/* Apply and Track pages: the card was centring everything and shrinking the fields */
+.pay-card.stack {
+  align-items: stretch;
+  text-align: left;
+}
+
+/* Checkboxes were getting the same padding as text boxes */
+input[type="checkbox"] {
+  padding: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--teal);
+}
+
+/* A disabled button is not "loading", so do not show the wait cursor */
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+/* Wide tables scroll sideways inside their card instead of breaking the page on small screens */
+.panel {
+  overflow-x: auto;
+}
+
+/* ---------- Phase 6 additions: append to the end of styles.css ---------- */
+.syllabus {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}

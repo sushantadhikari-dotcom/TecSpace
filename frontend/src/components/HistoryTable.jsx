@@ -1,4 +1,9 @@
-const STATUS = { ENROLLED: ["Registered", "ok"], DROPPED: ["Dropped", ""] };
+const STATUS = {
+  ENROLLED: ["Registered", "ok"],
+  PENDING: ["Waiting for approval", "warn"],
+  REJECTED: ["Declined", "bad"],
+  DROPPED: ["Dropped", ""],
+};
 
 export default function HistoryTable({ rows }) {
   if (!rows || rows.length === 0) return <p className="muted">No course registrations yet.</p>;

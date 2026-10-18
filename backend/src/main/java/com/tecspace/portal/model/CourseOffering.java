@@ -25,4 +25,8 @@ public class CourseOffering {
     private String instructorName;
     private String term;          // e.g. "Fall 2026"
     private List<String> prerequisites = new ArrayList<>();
+
+    /** Only students whose registration was approved can read these. */
+    private String syllabus = "";
+    private String syllabusUrl = "";
 }

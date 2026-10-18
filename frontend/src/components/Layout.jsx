@@ -32,6 +32,7 @@ const adminLinks = [
   { to: "/admin", label: "Students" },
   { to: "/admin/admissions", label: "Admissions", perm: "MANAGE_ADMISSIONS" },
   { to: "/admin/courses", label: "Courses" },
+  { to: "/admin/registrations", label: "Course registrations", perm: "APPROVE_REGISTRATIONS" },
   { to: "/admin/timetable", label: "Timetable", perm: "MANAGE_TIMETABLE" },
   { to: "/admin/exams", label: "Exams", perm: "MANAGE_EXAMS" },
   { to: "/admin/attendance", label: "Attendance", perm: "MANAGE_ATTENDANCE" },

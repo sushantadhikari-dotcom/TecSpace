@@ -11,7 +11,8 @@ public final class Permissions {
     public static final Map<String, String> ALL = new LinkedHashMap<>();
     static {
         ALL.put("MANAGE_STUDENTS", "View and edit student records, emergency contacts and medical information");
-        ALL.put("MANAGE_COURSES", "Create and edit courses");
+        ALL.put("MANAGE_COURSES", "Create and edit courses and syllabi");
+        ALL.put("APPROVE_REGISTRATIONS", "Approve or decline course registration requests");
         ALL.put("MANAGE_TIMETABLE", "Schedule classes");
         ALL.put("MANAGE_EXAMS", "Schedule exams");
         ALL.put("MANAGE_ATTENDANCE", "Take attendance and see attendance reports");
@@ -36,6 +37,7 @@ public final class Permissions {
             case "students" -> read ? ANY_STAFF : null;
             case "student-profiles" -> "MANAGE_STUDENTS";
             case "courses" -> read ? ANY_STAFF : "MANAGE_COURSES";
+            case "enrollment-requests" -> "APPROVE_REGISTRATIONS";
             case "timetable" -> "MANAGE_TIMETABLE";
             case "exams" -> "MANAGE_EXAMS";
             case "attendance" -> "MANAGE_ATTENDANCE";

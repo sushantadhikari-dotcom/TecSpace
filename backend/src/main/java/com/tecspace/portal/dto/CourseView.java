@@ -2,6 +2,10 @@ package com.tecspace.portal.dto;
 
 import java.util.List;
 
+/**
+ * status: NONE (not asked), PENDING (waiting for the administration), ENROLLED (approved), REJECTED (declined).
+ * enrolled is true only when approved.
+ */
 public record CourseView(
         String code,
         String name,
@@ -13,5 +17,8 @@ public record CourseView(
         String instructorName,
         List<String> prerequisites,
         boolean enrolled,
-        List<String> schedule
+        List<String> schedule,
+        String status,
+        String note,
+        boolean hasSyllabus
 ) {}

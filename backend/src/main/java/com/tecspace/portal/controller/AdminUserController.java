@@ -55,12 +55,12 @@ public class AdminUserController {
     }
 
     @GetMapping("/faculty-assignments")
-    public List<AssignmentView> assignments() {
+    public List<FacultyAssignmentView> assignments() {
         return faculty.all();
     }
 
     @PutMapping("/faculty-assignments/{teacherId}")
-    public List<AssignmentView> assign(@PathVariable String teacherId, @Valid @RequestBody AssignRequest req) {
+    public List<FacultyAssignmentView> assign(@PathVariable String teacherId, @Valid @RequestBody AssignRequest req) {
         faculty.assign(teacherId, req.courseCodes());
         return faculty.all();
     }

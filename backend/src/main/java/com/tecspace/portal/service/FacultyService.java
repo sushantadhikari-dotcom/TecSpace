@@ -1,6 +1,6 @@
 package com.tecspace.portal.service;
 
-import com.tecspace.portal.dto.AssignmentView;
+import com.tecspace.portal.dto.FacultyAssignmentView;
 import com.tecspace.portal.exception.ApiException;
 import com.tecspace.portal.model.FacultyAssignment;
 import com.tecspace.portal.model.User;
@@ -27,10 +27,10 @@ public class FacultyService {
         this.courseService = courseService;
     }
 
-    public List<AssignmentView> all() {
-        List<AssignmentView> out = new ArrayList<>();
+    public List<FacultyAssignmentView> all() {
+        List<FacultyAssignmentView> out = new ArrayList<>();
         for (User t : users.findByRole("ROLE_TEACHER")) {
-            out.add(new AssignmentView(t.getId(), (t.getFirstName() + " " + t.getLastName()).trim(),
+            out.add(new FacultyAssignmentView(t.getId(), (t.getFirstName() + " " + t.getLastName()).trim(),
                     t.getUniversityEmail(), codesFor(t.getId()).stream().sorted().toList()));
         }
         return out;

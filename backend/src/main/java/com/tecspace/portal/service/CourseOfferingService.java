@@ -82,6 +82,12 @@ public class CourseOfferingService {
         c.setCreditHours(r.creditHours());
         c.setCapacity(r.capacity());
         c.setInstructorName(r.instructorName() == null ? "" : r.instructorName().trim());
+        c.setSyllabus(r.syllabus() == null ? "" : r.syllabus().trim());
+        String url = r.syllabusUrl() == null ? "" : r.syllabusUrl().trim();
+        if (!url.isEmpty() && !(url.startsWith("http://") || url.startsWith("https://"))) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "The syllabus link must start with http:// or https://");
+        }
+        c.setSyllabusUrl(url);
 
         List<String> prereqs = new ArrayList<>();
         if (r.prerequisites() != null) {

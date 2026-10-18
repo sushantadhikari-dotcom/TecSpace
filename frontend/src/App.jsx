@@ -11,6 +11,7 @@ import Notifications from "./pages/Notifications.jsx";
 import Account from "./pages/Account.jsx";
 import Dashboard from "./pages/student/Dashboard.jsx";
 import Courses from "./pages/student/Courses.jsx";
+import CourseDetail from "./pages/student/CourseDetail.jsx";
 import Assignments from "./pages/student/Assignments.jsx";
 import Timetable from "./pages/student/Timetable.jsx";
 import Attendance from "./pages/student/Attendance.jsx";
@@ -32,6 +33,7 @@ import Students from "./pages/admin/Students.jsx";
 import StudentDetail from "./pages/admin/StudentDetail.jsx";
 import StudentRecord from "./pages/admin/StudentRecord.jsx";
 import AdminCourses from "./pages/admin/Courses.jsx";
+import AdminRegistrations from "./pages/admin/Registrations.jsx";
 import AdminTimetable from "./pages/admin/Timetable.jsx";
 import AdminAnnouncements from "./pages/admin/Announcements.jsx";
 import AdminExams from "./pages/admin/Exams.jsx";
@@ -84,6 +86,7 @@ export default function App() {
 
       <Route path="/student/dashboard" element={S(<Dashboard />)} />
       <Route path="/student/courses" element={S(<Courses />)} />
+      <Route path="/student/courses/:code" element={S(<CourseDetail />)} />
       <Route path="/student/assignments" element={S(<Assignments />)} />
       <Route path="/student/timetable" element={S(<Timetable />)} />
       <Route path="/student/attendance" element={S(<Attendance />)} />
@@ -106,6 +109,7 @@ export default function App() {
       <Route path="/admin" element={A(<Students />)} />
       <Route path="/admin/students/:id" element={A(<StudentDetail />)} />
       <Route path="/admin/records/:id" element={A(<StudentRecord />)} />
+      <Route path="/admin/registrations" element={A(<AdminRegistrations />)} />
       <Route path="/admin/admissions" element={A(<AdminAdmissions />)} />
       <Route path="/admin/courses" element={A(<AdminCourses />)} />
       <Route path="/admin/timetable" element={A(<AdminTimetable />)} />

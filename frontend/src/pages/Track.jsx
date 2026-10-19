@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import api, { errMsg } from "../api.js";
+import FileUploader from "../components/FileUploader.jsx";
 import Logo from "../components/Logo.jsx";
 
 const STATUS = {
@@ -53,6 +54,14 @@ export default function Track() {
                 ))}
               </tbody>
             </table>
+            <h2>Upload your documents</h2>
+            <FileUploader
+              listPath={`/public/applications/${encodeURIComponent(data.trackingCode)}/files`}
+              uploadPath={`/public/applications/${encodeURIComponent(data.trackingCode)}/files`}
+              params={{ email }}
+              accept=".pdf,.png,.jpg,.jpeg"
+              canEdit={data.status !== "REJECTED" && data.status !== "ENROLLED"}
+            />
           </>
         )}
         <p className="muted small"><Link to="/apply">New application</Link> · <Link to="/login">Log in</Link></p>

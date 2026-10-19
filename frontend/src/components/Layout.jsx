@@ -9,6 +9,8 @@ const studentLinks = [
   { to: "/student/courses", label: "Course registration" },
   { to: "/student/assignments", label: "Assignments" },
   { to: "/student/timetable", label: "Timetable & exams" },
+  { to: "/student/admit-card", label: "Exam admit card" },
+  { to: "/calendar", label: "Academic calendar" },
   { to: "/student/attendance", label: "Attendance" },
   { to: "/student/financials", label: "Fees & payments" },
   { to: "/student/invoices", label: "Invoices & ledger" },
@@ -21,6 +23,7 @@ const studentLinks = [
 
 const teacherLinks = [
   { to: "/teacher/courses", label: "My courses" },
+  { to: "/calendar", label: "Academic calendar" },
   { to: "/teacher/assignments", label: "Assignments" },
   { to: "/teacher/gradebook", label: "Gradebook" },
   { to: "/teacher/attendance", label: "Attendance" },
@@ -32,6 +35,7 @@ const adminLinks = [
   { to: "/admin", label: "Students" },
   { to: "/admin/admissions", label: "Admissions", perm: "MANAGE_ADMISSIONS" },
   { to: "/admin/courses", label: "Courses" },
+  { to: "/admin/calendar", label: "Calendar & reminders", perm: "MANAGE_COURSES" },
   { to: "/admin/registrations", label: "Course registrations", perm: "APPROVE_REGISTRATIONS" },
   { to: "/admin/timetable", label: "Timetable", perm: "MANAGE_TIMETABLE" },
   { to: "/admin/exams", label: "Exams", perm: "MANAGE_EXAMS" },

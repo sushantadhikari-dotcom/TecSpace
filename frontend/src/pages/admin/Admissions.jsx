@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api, { errMsg } from "../../api.js";
+import { downloadFile } from "../../files.js";
 
 const STATUS = {
   SUBMITTED: ["Under review", "warn"], APPROVED: ["Approved", "ok"], WAITLISTED: ["Waiting list", "warn"],
@@ -69,6 +70,10 @@ function AppCard({ app, reload, setError, setOk, setSecret }) {
   const [email, setEmail] = useState("");
   const [text, cls] = STATUS[app.status] || ["", ""];
   const closed = app.status === "REJECTED" || app.status === "ENROLLED";
+  const [files, setFiles] = useState([]);
+  useEffect(() => {
+    api.get(`/admin/applications/${app.id}/files`).then((r) => setFiles(r.data)).catch(() => {});
+  }, [app.id]);
 
   const run = async (fn, message) => {
     setError(""); setOk("");
@@ -92,6 +97,13 @@ function AppCard({ app, reload, setError, setOk, setSecret }) {
         {app.statement && <><br /><span className="muted">“{app.statement}”</span></>}
       </p>
 
+      <div className="small" style={{ marginBottom: "0.5rem" }}>
+        <strong>Uploaded files:</strong>{" "}
+        {files.length === 0 ? <span className="muted">none yet</span> : files.map((f) => (
+          <button key={f.id} type="button" className="link-btn" style={{ marginRight: 12 }}
+            onClick={() => downloadFile(`/admin/applications/files/${f.id}/download`, f.name).catch((e) => setError(errMsg(e)))}>{f.name}</button>
+        ))}
+      </div>
       <table>
         <thead><tr><th>Document</th><th>Check</th><th>Note</th></tr></thead>
         <tbody>

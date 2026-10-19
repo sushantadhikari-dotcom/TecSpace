@@ -33,10 +33,12 @@ public class EnrollmentService {
     private final TimetableService timetable;
     private final EnrollmentRules rules;
     private final NotificationService notifications;
+    private final CalendarService calendar;
 
     public EnrollmentService(CourseOfferingService courseService, CourseOfferingRepository courses,
                              EnrollmentRepository enrollments, TimetableSlotRepository slots,
-                             TimetableService timetable, EnrollmentRules rules, NotificationService notifications) {
+                             TimetableService timetable, EnrollmentRules rules, NotificationService notifications,
+                             CalendarService calendar) {
         this.courseService = courseService;
         this.courses = courses;
         this.enrollments = enrollments;
@@ -44,6 +46,7 @@ public class EnrollmentService {
         this.timetable = timetable;
         this.rules = rules;
         this.notifications = notifications;
+        this.calendar = calendar;
     }
 
     // ---------------------------------------------------------------- views
@@ -87,6 +90,7 @@ public class EnrollmentService {
 
     /** Sends a registration REQUEST. Nothing is registered until the administration approves it. */
     public CourseView register(User student, String courseCode) {
+        calendar.requireRegistrationOpen();   // students can only ask while registration is open
         String term = courseService.term();
         CourseOffering course = courseService.get(courseCode);
         if (!term.equals(course.getTerm())) {

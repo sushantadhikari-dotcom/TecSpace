@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api, { errMsg } from "../../api.js";
 import ProfileForm from "../../components/ProfileForm.jsx";
+import PhotoUpload from "../../components/PhotoUpload.jsx";
 import HistoryTable from "../../components/HistoryTable.jsx";
 
 export default function StudentRecord() {
@@ -42,6 +43,11 @@ export default function StudentRecord() {
           <Link to={`/admin/students/${id}`}>Fees &amp; grades</Link>
         </div>
         <p className="muted small">Opening this record is written to the audit log.</p>
+      </section>
+
+      <section className="panel">
+        <h2>Photo</h2>
+        <PhotoUpload photoPath={`/admin/student-profiles/${id}/photo`} />
       </section>
 
       <ProfileForm data={rec.profile} onSave={save} saveLabel="Save record" />

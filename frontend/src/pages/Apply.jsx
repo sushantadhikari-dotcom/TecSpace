@@ -33,7 +33,7 @@ export default function Apply() {
           <p>Thank you, {done.name}. Keep this code to follow your application:</p>
           <div className="temp-pass">{done.trackingCode}</div>
           <p className="muted">
-            Bring or send your documents to the admissions office: {done.documents.map((d) => d.name).join(", ")}.
+            Upload these documents (PDF or photo, up to 5 MB each) from the Track page: {done.documents.map((d) => d.name).join(", ")}.
             We will verify them and update your status.
           </p>
           <Link to="/track">Track your application</Link>

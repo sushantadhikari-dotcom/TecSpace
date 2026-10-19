@@ -10,6 +10,9 @@ export default function Courses() {
 
   const load = () => api.get("/student/courses").then((r) => setList(r.data)).catch((e) => setError(errMsg(e)));
   useEffect(() => { load(); }, []);
+  const [cal, setCal] = useState(null);
+  useEffect(() => { api.get("/calendar").then((r) => setCal(r.data)).catch(() => {}); }, []);
+  const closed = cal && !cal.registrationOpen;
 
   const request = async (c) => {
     setError(""); setOk(""); setBusy(c.code);
@@ -41,6 +44,9 @@ export default function Courses() {
   return (
     <>
       <h1 className="page-title">Course registration</h1>
+      {cal && cal.registrationMessage && (
+        <div className={`alert ${cal.registrationOpen ? "success" : "error"}`} role="status">{cal.registrationMessage}</div>
+      )}
       {error && <div className="alert error" role="alert">{error}</div>}
       {ok && <div className="alert success" role="status">{ok}</div>}
 
@@ -123,7 +129,7 @@ export default function Courses() {
                   <td>{c.prerequisites.length ? c.prerequisites.join(", ") : "None"}</td>
                   <td>{c.seatsLeft} / {c.capacity}</td>
                   <td className="num">
-                    <button className="btn primary" disabled={busy === c.code || c.seatsLeft === 0} onClick={() => request(c)}>
+                    <button className="btn primary" disabled={busy === c.code || c.seatsLeft === 0 || closed} onClick={() => request(c)}>
                       {c.seatsLeft === 0 ? "Full" : c.status === "REJECTED" ? "Ask again" : "Request"}
                     </button>
                   </td>

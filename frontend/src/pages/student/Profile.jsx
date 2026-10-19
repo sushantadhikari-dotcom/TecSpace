@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api, { errMsg } from "../../api.js";
 import ProfileForm from "../../components/ProfileForm.jsx";
+import PhotoUpload from "../../components/PhotoUpload.jsx";
 import HistoryTable from "../../components/HistoryTable.jsx";
 
 export default function Profile() {
@@ -28,6 +29,11 @@ export default function Profile() {
       <h1 className="page-title">My profile</h1>
       {error && <div className="alert error" role="alert">{error}</div>}
       {ok && <div className="alert success" role="status">{ok}</div>}
+
+      <section className="panel">
+        <h2>Photo</h2>
+        <PhotoUpload photoPath="/student/photo" uploadPath="/student/photo" />
+      </section>
 
       {!data ? <p className="muted">Loading…</p> : <ProfileForm data={data} onSave={save} />}
 

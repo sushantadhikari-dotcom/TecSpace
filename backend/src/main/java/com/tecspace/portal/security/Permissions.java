@@ -38,6 +38,7 @@ public final class Permissions {
             case "student-profiles" -> "MANAGE_STUDENTS";
             case "courses" -> read ? ANY_STAFF : "MANAGE_COURSES";
             case "enrollment-requests" -> "APPROVE_REGISTRATIONS";
+            case "calendar" -> "MANAGE_COURSES";
             case "timetable" -> "MANAGE_TIMETABLE";
             case "exams" -> "MANAGE_EXAMS";
             case "attendance" -> "MANAGE_ATTENDANCE";

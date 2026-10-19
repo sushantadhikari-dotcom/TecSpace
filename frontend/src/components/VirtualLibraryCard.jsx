@@ -1,6 +1,6 @@
 import { QRCodeSVG } from "qrcode.react";
 
-export default function VirtualLibraryCard({ card, student }) {
+export default function VirtualLibraryCard({ card, student, photo }) {
   return (
     <div className="libcard">
       <div className="libcard-top">
@@ -9,10 +9,13 @@ export default function VirtualLibraryCard({ card, student }) {
       </div>
 
       <div className="libcard-mid">
-        <div>
-          <h2>{student.firstName} {student.lastName}</h2>
-          <p>{student.faculty}</p>
-          <p className="mono">{card.cardNumber}</p>
+        <div className="libcard-who">
+          {photo && <img className="libcard-photo" src={photo} alt="" />}
+          <div>
+            <h2>{student.firstName} {student.lastName}</h2>
+            <p>{student.faculty}</p>
+            <p className="mono">{card.cardNumber}</p>
+          </div>
         </div>
         <div className="libcard-qr">
           <QRCodeSVG value={card.qrCodePayload || card.cardNumber} size={76} />

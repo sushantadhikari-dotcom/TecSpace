@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api, { errMsg } from "../../api.js";
 import { useAuth } from "../../AuthContext.jsx";
 import VirtualLibraryCard from "../../components/VirtualLibraryCard.jsx";
+import { blobUrl } from "../../files.js";
 
 export default function Library() {
   const { user } = useAuth();
@@ -9,6 +10,8 @@ export default function Library() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  useEffect(() => { blobUrl("/student/photo").then(setPhoto).catch(() => {}); }, []);
 
   useEffect(() => {
     api.get("/student/library-card")
@@ -37,7 +40,7 @@ export default function Library() {
 
       {card ? (
         <section className="panel center">
-          <VirtualLibraryCard card={card} student={user} />
+          <VirtualLibraryCard card={card} student={user} photo={photo} />
           <p className="muted">Show this QR code at the library desk to borrow books.</p>
         </section>
       ) : (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api, { errMsg } from "../../api.js";
+import { downloadFile } from "../../files.js";
 
 const blank = { courseCode: "", title: "", description: "", dueAt: "", maxMarks: 100 };
 const when = (d) => new Date(d).toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
@@ -113,6 +114,7 @@ export default function Assignments() {
 
 function Submissions({ assignment, setError, setOk, onChanged }) {
   const [rows, setRows] = useState(null);
+  const [files, setFiles] = useState([]);
   const [edits, setEdits] = useState({});
 
   const load = () =>
@@ -122,7 +124,10 @@ function Submissions({ assignment, setError, setOk, onChanged }) {
       r.data.forEach((s) => { e[s.studentId] = { marks: s.marks ?? "", feedback: s.feedback || "" }; });
       setEdits(e);
     }).catch((err) => setError(errMsg(err)));
-  useEffect(() => { load(); }, [assignment.id]);
+  useEffect(() => {
+    load();
+    api.get(`/teacher/assignments/${assignment.id}/files`).then((r) => setFiles(r.data)).catch(() => {});
+  }, [assignment.id]);
 
   const save = async (s) => {
     setError(""); setOk("");
@@ -152,6 +157,9 @@ function Submissions({ assignment, setError, setOk, onChanged }) {
                   <>
                     {s.text && <details><summary className="small">Read answer</summary><p style={{ whiteSpace: "pre-wrap" }}>{s.text}</p></details>}
                     {s.link && <a href={s.link} target="_blank" rel="noreferrer" className="small">Open link</a>}
+                    {files.filter((f) => f.studentId === s.studentId).map((f) => (
+                      <div key={f.id}><button type="button" className="link-btn small" onClick={() => downloadFile(`/teacher/files/${f.id}/download`, f.name).catch((e) => setError(errMsg(e)))}>{f.name}</button></div>
+                    ))}
                     <div className="small muted">{when(s.submittedAt)}</div>
                   </>
                 )}

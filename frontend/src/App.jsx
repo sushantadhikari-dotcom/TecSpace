@@ -9,6 +9,10 @@ import PayEsewa from "./pages/PayEsewa.jsx";
 import PayReturn from "./pages/PayReturn.jsx";
 import Notifications from "./pages/Notifications.jsx";
 import Account from "./pages/Account.jsx";
+import Calendar from "./pages/Calendar.jsx";
+import VerifyAdmit from "./pages/VerifyAdmit.jsx";
+import AdmitCard from "./pages/student/AdmitCard.jsx";
+import CalendarAdmin from "./pages/admin/CalendarAdmin.jsx";
 import Dashboard from "./pages/student/Dashboard.jsx";
 import Courses from "./pages/student/Courses.jsx";
 import CourseDetail from "./pages/student/CourseDetail.jsx";
@@ -75,6 +79,7 @@ export default function App() {
       {/* Public: admissions */}
       <Route path="/apply" element={<Apply />} />
       <Route path="/track" element={<Track />} />
+      <Route path="/verify/admit" element={<VerifyAdmit />} />
 
       {/* Payer pages: opened from the QR on a phone, so no login needed */}
       <Route path="/pay/esewa/:token" element={<PayEsewa />} />
@@ -83,10 +88,12 @@ export default function App() {
       {/* Any logged-in user */}
       <Route path="/notifications" element={<Protected><Notifications /></Protected>} />
       <Route path="/account" element={<Protected><Account /></Protected>} />
+      <Route path="/calendar" element={<Protected><Calendar /></Protected>} />
 
       <Route path="/student/dashboard" element={S(<Dashboard />)} />
       <Route path="/student/courses" element={S(<Courses />)} />
       <Route path="/student/courses/:code" element={S(<CourseDetail />)} />
+      <Route path="/student/admit-card" element={S(<AdmitCard />)} />
       <Route path="/student/assignments" element={S(<Assignments />)} />
       <Route path="/student/timetable" element={S(<Timetable />)} />
       <Route path="/student/attendance" element={S(<Attendance />)} />
@@ -110,6 +117,7 @@ export default function App() {
       <Route path="/admin/students/:id" element={A(<StudentDetail />)} />
       <Route path="/admin/records/:id" element={A(<StudentRecord />)} />
       <Route path="/admin/registrations" element={A(<AdminRegistrations />)} />
+      <Route path="/admin/calendar" element={A(<CalendarAdmin />)} />
       <Route path="/admin/admissions" element={A(<AdminAdmissions />)} />
       <Route path="/admin/courses" element={A(<AdminCourses />)} />
       <Route path="/admin/timetable" element={A(<AdminTimetable />)} />

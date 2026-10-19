@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api, { errMsg } from "../../api.js";
+import FileUploader from "../../components/FileUploader.jsx";
 
 const STATUS = {
   NOT_SUBMITTED: ["Not handed in", ""], SUBMITTED: ["Handed in", "ok"], LATE: ["Handed in late", "warn"], GRADED: ["Marked", "ok"],
@@ -66,6 +67,16 @@ function Card({ a, reload, setError, setOk }) {
         <span className={`pill ${cls}`}>{text0}</span>
       </div>
       {a.description && <p style={{ whiteSpace: "pre-wrap" }}>{a.description}</p>}
+
+      <h3 className="small" style={{ margin: "0.5rem 0 0.25rem" }}>Your files</h3>
+      <FileUploader
+        listPath={`/student/assignments/${a.id}/files`}
+        uploadPath={`/student/assignments/${a.id}/files`}
+        downloadPath={(f) => `/student/files/${f.id}/download`}
+        deletePath={(f) => `/student/files/${f.id}`}
+        canEdit={a.status !== "GRADED"}
+        onChange={reload}
+      />
 
       {a.status === "GRADED" && (
         <div className="alert success">

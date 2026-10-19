@@ -20,21 +20,31 @@ api.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(err);
-  }
+  },
 );
 
 /** Pull a readable message out of an axios error. */
 export function errMsg(err) {
   return (
     err.response?.data?.message ||
-    (err.code === "ERR_NETWORK" ? "Cannot reach the TecSpace server. Is the backend running?" : "Something went wrong")
+    (err.code === "ERR_NETWORK"
+      ? "Cannot reach the TecSpace server. Is the backend running?"
+      : "Something went wrong")
   );
 }
 
 export const money = (n) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(Number(n || 0));
+  "Rs " +
+  new Intl.NumberFormat("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(n || 0));
 
 export const methodLabel = (m) =>
-  ({ QR_PAYMENT: "QR payment", CASH_PAYMENT: "Cash payment", ADMIN_ADJUSTMENT: "Admin adjustment" }[m] || m);
+  ({
+    QR_PAYMENT: "QR payment",
+    CASH_PAYMENT: "Cash payment",
+    ADMIN_ADJUSTMENT: "Admin adjustment",
+  })[m] || m;
 
 export default api;

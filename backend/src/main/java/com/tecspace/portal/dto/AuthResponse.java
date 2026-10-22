@@ -8,5 +8,6 @@ public record AuthResponse(
         String lastName,
         String faculty,
         String session,
-        String role
+        String role,
+        boolean mustChangePassword
 ) {}

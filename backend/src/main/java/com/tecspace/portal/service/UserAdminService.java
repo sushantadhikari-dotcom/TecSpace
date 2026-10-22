@@ -54,6 +54,7 @@ public class UserAdminService {
         u.setFaculty(r.role());
         u.setSession("N/A");
         u.setPermissions(cleanPermissions(r.permissions()));
+        u.setMustChangePassword(true);   // the temporary password must be changed at first login
         return new CreatedUser(UserView.from(users.save(u)), temp);
     }
 
@@ -66,6 +67,8 @@ public class UserAdminService {
         u.setFaculty(r.role());
         u.setPermissions(cleanPermissions(r.permissions()));
         u.setActive(r.active());
+        u.setFailedLogins(0);
+        u.setLockedUntil(null);
         return UserView.from(users.save(u));
     }
 
@@ -73,8 +76,19 @@ public class UserAdminService {
         User u = staff(id);
         String temp = TempPassword.generate();
         u.setPassword(encoder.encode(temp));
+        u.setMustChangePassword(true);
+        u.setFailedLogins(0);
+        u.setLockedUntil(null);
         users.save(u);
         return temp;
+    }
+
+    /** Clears a lock caused by too many wrong passwords. Works for any account. */
+    public void unlock(String id) {
+        User u = users.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
+        u.setFailedLogins(0);
+        u.setLockedUntil(null);
+        users.save(u);
     }
 
     public Map<String, String> permissionCatalog() {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Available to every logged-in user. */
+/** Available to every logged-in user, even before a temporary password has been changed. */
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
@@ -42,6 +42,7 @@ public class AccountController {
         m.put("permissions", u.getPermissions());
         m.put("faculty", u.getFaculty());
         m.put("session", u.getSession());
+        m.put("mustChangePassword", u.isMustChangePassword());
         return m;
     }
 
@@ -51,7 +52,11 @@ public class AccountController {
         if (!encoder.matches(req.currentPassword(), u.getPassword())) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Your current password is not correct");
         }
+        if (encoder.matches(req.newPassword(), u.getPassword())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Choose a password that is different from the current one");
+        }
         u.setPassword(encoder.encode(req.newPassword()));
+        u.setMustChangePassword(false);
         users.save(u);
         return ResponseEntity.noContent().build();
     }

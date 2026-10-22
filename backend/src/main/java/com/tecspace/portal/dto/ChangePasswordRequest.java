@@ -1,9 +1,10 @@
 package com.tecspace.portal.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 public record ChangePasswordRequest(
         @NotBlank String currentPassword,
-        @NotBlank @Size(min = 8, message = "must be at least 8 characters") String newPassword
+        @NotBlank @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
+                message = "must be at least 8 characters and include a letter and a number") String newPassword
 ) {}

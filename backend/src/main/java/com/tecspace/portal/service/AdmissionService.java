@@ -142,7 +142,7 @@ public class AdmissionService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Only approved applications can be enrolled");
         }
         String temp = TempPassword.generate();
-        AuthResponse created = authService.signup(new SignupRequest(universityEmail.trim(), temp, a.getFirstName(),
+        AuthResponse created = authService.signupTemporary(new SignupRequest(universityEmail.trim(), temp, a.getFirstName(),
                 a.getLastName(), a.getMobileNumber(), a.getFaculty(), a.getSession()));
 
         a.setStatus(Application.ENROLLED);

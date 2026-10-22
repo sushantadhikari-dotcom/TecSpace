@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-/** Creates the first admin account on startup if it does not exist yet. */
+/** Creates the first admin account on startup if it does not exist yet. The admin must change the password at first login. */
 @Component
 public class DataSeeder implements CommandLineRunner {
 
@@ -37,7 +37,8 @@ public class DataSeeder implements CommandLineRunner {
         admin.setFaculty("ADMIN");
         admin.setSession("N/A");
         admin.setRole("ROLE_ADMIN");
+        admin.setMustChangePassword(true);
         userRepository.save(admin);
-        System.out.println(">>> TecSpace admin created: " + adminEmail);
+        System.out.println(">>> TecSpace admin created: " + adminEmail + " (must change the password at first login)");
     }
 }

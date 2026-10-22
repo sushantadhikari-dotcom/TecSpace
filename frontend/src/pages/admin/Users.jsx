@@ -56,6 +56,14 @@ export default function Users() {
     } catch (err) { setError(errMsg(err)); }
   };
 
+  const unlock = async (u) => {
+    setError(""); setOk(""); setSecret(null);
+    try {
+      await api.post(`/admin/users/${u.id}/unlock`);
+      setOk(`${u.universityEmail} was unlocked.`);
+    } catch (err) { setError(errMsg(err)); }
+  };
+
   const saveAssign = async (t, codes) => {
     setError(""); setOk("");
     try {
@@ -130,7 +138,8 @@ export default function Users() {
                   <td><span className={`pill ${u.active ? "ok" : "bad"}`}>{u.active ? "Active" : "Disabled"}</span></td>
                   <td className="num">
                     <button className="btn ghost" onClick={() => setEditing({ id: u.id, name: `${u.firstName} ${u.lastName}`, role: u.role.replace("ROLE_", ""), permissions: [...u.permissions], active: u.active })}>Edit</button>{" "}
-                    <button className="btn ghost" onClick={() => reset(u)}>Reset password</button>
+                    <button className="btn ghost" onClick={() => reset(u)}>Reset password</button>{" "}
+                    <button className="btn ghost" onClick={() => unlock(u)}>Unlock</button>
                   </td>
                 </tr>
               ))}

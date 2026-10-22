@@ -1,10 +1,12 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext.jsx";
 import Layout from "./components/Layout.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Apply from "./pages/Apply.jsx";
 import Track from "./pages/Track.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 import PayEsewa from "./pages/PayEsewa.jsx";
 import PayReturn from "./pages/PayReturn.jsx";
 import Notifications from "./pages/Notifications.jsx";
@@ -59,7 +61,10 @@ const home = (user) => {
 
 function Protected({ roles, children }) {
   const { user } = useAuth();
+  const location = useLocation();
   if (!user) return <Navigate to="/login" replace />;
+  // A temporary password must be changed before anything else can be used
+  if (user.mustChangePassword && location.pathname !== "/account") return <Navigate to="/account" replace />;
   if (roles && !roles.includes(user.role)) return <Navigate to={home(user)} replace />;
   return <Layout>{children}</Layout>;
 }
@@ -79,6 +84,8 @@ export default function App() {
       {/* Public: admissions */}
       <Route path="/apply" element={<Apply />} />
       <Route path="/track" element={<Track />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify/admit" element={<VerifyAdmit />} />
 
       {/* Payer pages: opened from the QR on a phone, so no login needed */}

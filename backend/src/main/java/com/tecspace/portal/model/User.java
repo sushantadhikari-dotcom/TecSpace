@@ -30,5 +30,8 @@ public class User {
     private String role;      // ROLE_STUDENT, ROLE_ADMIN, ROLE_STAFF, ROLE_TEACHER
     private List<String> permissions = new ArrayList<>();   // used by ROLE_STAFF
     private boolean active = true;                           // false = account disabled
+    private int failedLogins = 0;                            // wrong passwords in a row
+    private Instant lockedUntil;                             // locked after too many wrong passwords
+    private boolean mustChangePassword = false;              // true after an admin gives a temporary password
     private Instant createdAt = Instant.now();
 }

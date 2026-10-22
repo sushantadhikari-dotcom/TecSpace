@@ -18,8 +18,9 @@ import java.util.List;
 
 /**
  * Runs after the JWT is read. It (1) checks against the database that the account still exists and is active,
- * (2) uses the CURRENT role from the database, so a role change takes effect straight away, and
- * (3) checks the permission a staff member needs for the admin endpoint being called.
+ * (2) uses the CURRENT role from the database, so a role change takes effect straight away,
+ * (3) blocks everything except the Account page while a temporary password has not been changed, and
+ * (4) checks the permission a staff member needs for the admin endpoint being called.
  * Not a Spring bean on purpose: it is added to the security chain in SecurityConfig.
  */
 public class PermissionFilter extends OncePerRequestFilter {
@@ -39,19 +40,24 @@ public class PermissionFilter extends OncePerRequestFilter {
         if (auth != null && path.startsWith("/api/") && !isPublic(path)) {
             User user = users.findByUniversityEmail(auth.getName()).orElse(null);
             if (user == null || !user.isActive()) {
-                reject(response, 401, "This account is disabled or no longer exists");
+                reject(response, 401, "This account is disabled or no longer exists", null);
                 return;
             }
 
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                     user.getUniversityEmail(), null, List.of(new SimpleGrantedAuthority(user.getRole()))));
 
+            if (user.isMustChangePassword() && !path.startsWith("/api/account/")) {
+                reject(response, 403, "You must change your temporary password first", "PASSWORD_CHANGE_REQUIRED");
+                return;
+            }
+
             if (path.startsWith("/api/admin/") && "ROLE_STAFF".equals(user.getRole())) {
                 String needed = Permissions.required(request.getMethod(), path.substring("/api/admin/".length()));
                 boolean allowed = Permissions.ANY_STAFF.equals(needed)
                         || (needed != null && user.getPermissions().contains(needed));
                 if (!allowed) {
-                    reject(response, 403, "You do not have permission to do this");
+                    reject(response, 403, "You do not have permission to do this", null);
                     return;
                 }
             }
@@ -63,9 +69,10 @@ public class PermissionFilter extends OncePerRequestFilter {
         return path.startsWith("/api/auth/") || path.startsWith("/api/pay/") || path.startsWith("/api/public/");
     }
 
-    private void reject(HttpServletResponse response, int status, String message) throws IOException {
+    private void reject(HttpServletResponse response, int status, String message, String code) throws IOException {
         response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write("{\"message\":\"" + message + "\"}");
+        response.getWriter().write("{\"message\":\"" + message + "\""
+                + (code == null ? "" : ",\"code\":\"" + code + "\"") + "}");
     }
 }

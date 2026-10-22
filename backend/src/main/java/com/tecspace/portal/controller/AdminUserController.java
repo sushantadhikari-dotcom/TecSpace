@@ -54,6 +54,12 @@ public class AdminUserController {
         return Map.of("temporaryPassword", userAdmin.resetPassword(id));
     }
 
+    @PostMapping("/users/{id}/unlock")
+    public Map<String, String> unlock(@PathVariable String id) {
+        userAdmin.unlock(id);
+        return Map.of("message", "Account unlocked");
+    }
+
     @GetMapping("/faculty-assignments")
     public List<FacultyAssignmentView> assignments() {
         return faculty.all();

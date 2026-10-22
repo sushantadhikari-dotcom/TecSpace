@@ -66,6 +66,9 @@ export default function Login() {
           {busy ? "Logging in…" : "Log in"}
         </button>
         <p className="muted">
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </p>
+        <p className="muted">
           New student? <Link to="/signup">Create your account</Link>
         </p>
         <p className="muted">
@@ -74,5 +77,5 @@ export default function Login() {
         </p>
       </form>
     </div>
-  );
+  );  
 }

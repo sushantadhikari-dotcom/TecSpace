@@ -1,0 +1,16 @@
+# Copy this file to  backend/src/main/resources/application-local.properties  (it is ignored by git)
+# and start the backend with:   mvn spring-boot:run "-Dspring-boot.run.profiles=local"
+
+# At least 32 random characters. Make your own, do not reuse this one.
+tecspace.jwt.secret=PUT-A-LONG-RANDOM-SECRET-HERE-AT-LEAST-32-CHARS
+# Used only the first time, to create the admin. The admin must change it at first login.
+tecspace.admin.password=PUT-A-STRONG-PASSWORD-HERE1
+
+# --- Optional: real email for "forgot password" (Gmail example, use an App Password) ---
+# spring.mail.host=smtp.gmail.com
+# spring.mail.port=587
+# spring.mail.username=youraddress@gmail.com
+# spring.mail.password=your-16-character-app-password
+# spring.mail.properties.mail.smtp.auth=true
+# spring.mail.properties.mail.smtp.starttls.enable=true
+# tecspace.mail.from=youraddress@gmail.com
